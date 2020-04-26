@@ -1,6 +1,7 @@
+# Most command output is silenced by default unless VERBOSE is set
+VERBOSE ?=
 
-
-# Prefix to install
+# Prefix controlling where software is installed
 PREFIX ?= /usr/local
 
 # ------- .NET settings
@@ -30,13 +31,23 @@ ENG_USING_RUBY ?= $(ENG_AUTODETECT_USING_RUBY)
 # Latest version of Ruby supported
 ENG_LATEST_RUBY_VERSION = 2.6.0
 
-# Whether to turn on command silencing depends on whether VERBOSE was set
+# -------
+#
+# `chronic` is a tool from moreutils which can suppress output except when
+# errors occur.   If chronic is available, then OUTPUT_COLLAPSED can be used
+# to suppress output conditionally
+_CHRONIC = $(shell command -v chronic 2> /dev/null)
+
 ifneq (, $(VERBOSE))
 Q =
 OUTPUT_HIDDEN =
+OUTPUT_COLLAPSED =
+_STANDARD_VERBOSE_FLAG =
 else
 Q = @
-OUTPUT_HIDDEN = >/dev/null
+OUTPUT_HIDDEN = >/dev/null 2>/dev/null
+OUTPUT_COLLAPSED = $(or $(_CHRONIC),$(OUTPUT_HIDDEN))
+_STANDARD_VERBOSE_FLAG = -v
 endif
 
 # These variables are meant to be used internally

@@ -24,9 +24,9 @@ endif
 
 -ruby/init: -check-command-rbenv
 	@    echo "$(_GREEN)Installing Ruby and Ruby dependencies...$(_RESET)"
-	$(Q) rbenv install -s $(OUTPUT_HIDDEN)
-	$(Q) gem install bundler  $(OUTPUT_HIDDEN)
-	$(Q) [ -f Gemfile ] && bundle install  $(OUTPUT_HIDDEN)
+	$(Q) $(OUTPUT_COLLAPSED) rbenv install -s
+	$(Q) $(OUTPUT_COLLAPSED) gem install bundler
+	$(Q) [ -f Gemfile ] && $(OUTPUT_HIDDEN) bundle install
 
 -use/ruby-Gemfile: -check-command-Gemfile
 	$(Q) [ -f Gemfile ] || bundle init

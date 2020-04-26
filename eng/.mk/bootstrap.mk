@@ -23,10 +23,10 @@ init:
 		echo >&2 "$(_FATAL_ERROR) Please install Homebrew first (https://brew.sh)"; \
 		exit 1; \
 	fi
-	$(Q) brew update $(OUTPUT_HIDDEN)
+	$(Q) $(OUTPUT_COLLAPSED) brew update
 
 -direnv-install: -check-command-brew
-	$(Q) brew install direnv
-	$(Q) direnv allow $(OUTPUT_HIDDEN)
+	$(Q) $(OUTPUT_COLLAPSED) brew install direnv
+	$(Q) $(OUTPUT_COLLAPSED) direnv allow
 
 -init-frameworks: | homebrew/init dotnet/init ruby/init
