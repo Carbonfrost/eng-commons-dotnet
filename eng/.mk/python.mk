@@ -3,11 +3,7 @@ ENG_AUTODETECT_USING_PYTHON = $(shell \
 	[ ! -f Pipfile ] ; \
 	echo $$? \
 )
-ENG_USING_PYTHON ?= $(ENG_AUTODETECT_USING_PYTHON)
-
-PYTHON ?= python3
-PIP ?= pip3
-VIRTUAL_ENV_NAME ?= venv
+ENG_AVAILABLE_RUNTIMES += python
 
 _VENV = . $(VIRTUAL_ENV_NAME)/bin/activate $(OUTPUT_HIDDEN)
 
@@ -20,10 +16,13 @@ _VENV = . $(VIRTUAL_ENV_NAME)/bin/activate $(OUTPUT_HIDDEN)
 	python/init \
 	use/python \
 
+## Add support for python
 use/python: | -python/init -use/python-version -use/python-Pipfile
 
 # Enable the tasks if we are using python
 ifeq (1, $(ENG_USING_PYTHON))
+
+ENG_ENABLED_RUNTIMES += python
 
 ## Install python and project dependencies
 python/init: -python/init
@@ -49,15 +48,18 @@ endif
 	$(Q) brew install $(PYTHON) $(OUTPUT_HIDDEN)
 
 -python/init-venv: -check-command-$(PYTHON)
-	@ if [ "$(VIRTUAL_ENV)" != "$(shell pwd)/$(VIRTUAL_ENV_NAME)" ] || [ ! -d "$(VIRTUAL_ENV)" ]; then \
+	$(Q) if [ "$(VIRTUAL_ENV)" != "$(shell pwd)/$(VIRTUAL_ENV_NAME)" ] || [ ! -d "$(VIRTUAL_ENV)" ]; then \
 		$(PYTHON) -m venv $(VIRTUAL_ENV_NAME) $(OUTPUT_HIDDEN); \
 	fi
-	@ ( \
+	$(Q) ( \
 		$(_VENV) && \
-		$(PIP) install pipenv $(OUTPUT_HIDDEN) && \
-		pipenv install $(OUTPUT_HIDDEN)\
+		$(PIP) install pipenv $(OUTPUT_HIDDEN) \
 	)
 
 -python/init-deps: -check-command-$(PYTHON)
-	$(Q) [ -f requirements.txt ] && pip install $(OUTPUT_HIDDEN)
-	$(Q) $(_VENV) && command -v pipenv && [ -f Pipfile ] && pipenv install $(OUTPUT_HIDDEN)
+	$(Q) if [ -f requirements.txt ]; then \
+		$(_VENV) && pip install $(OUTPUT_HIDDEN); \
+	fi
+	$(Q) if [ -f Pipfile ]; then \
+		$(_VENV) && command -v pipenv > /dev/null && pipenv install $(OUTPUT_HIDDEN); \
+	fi

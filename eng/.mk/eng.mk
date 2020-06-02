@@ -20,25 +20,28 @@ release/requirements:
 eng/check:
 	$(Q) eng/check_csproj
 
-eng_update_file:=$(shell mktemp)
+_ENG_UPDATE_FILE:=$(shell mktemp)
 
-eng/update: -download-eng-archive
-	$(Q) (tar -xf "$(eng_update_file)" --strip-components=1 'eng-commons-dotnet-master/eng/*'; \
-		tar -xf "$(eng_update_file)" --strip-components=2 'eng-commons-dotnet-master/integration/*'; \
+eng/update: -download-eng-archive -clean-eng-directory
+	$(Q) (tar -xf "$(_ENG_UPDATE_FILE)" --strip-components=1 'eng-commons-dotnet-master/eng/*'; \
+		tar -xf "$(_ENG_UPDATE_FILE)" --strip-components=2 'eng-commons-dotnet-master/integration/*'; \
 	)
 
 ifeq ($(ENG_DEV_UPDATE), 1)
 -download-eng-archive: -check-eng-updates-requirements
-	$(Q) git archive --format=zip --prefix=eng-commons-dotnet-master/ --remote=file://$(HOME)/source/eng-commons-dotnet master -o $(eng_update_file)
+	$(Q) git archive --format=zip --prefix=eng-commons-dotnet-master/ --remote=file://$(HOME)/source/eng-commons-dotnet master -o $(_ENG_UPDATE_FILE)
 
 else
 -download-eng-archive: -check-eng-updates-requirements
-	$(Q) curl -o "$(eng_update_file)" -sL https://github.com/Carbonfrost/eng-commons-dotnet/archive/master.zip
+	$(Q) curl -o "$(_ENG_UPDATE_FILE)" -sL https://github.com/Carbonfrost/eng-commons-dotnet/archive/master.zip
 endif
 
 
 _RED = \x1b[31m
 _RESET = \x1b[39m
+
+-clean-eng-directory:
+	$(Q) rm -rf eng
 
 -check-eng-updates-requirements:
 	@ if [ ! $(shell command -v curl ) ]; then \
