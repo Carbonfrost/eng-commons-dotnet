@@ -12,6 +12,7 @@ env:
   NUGET_USER_NAME: ${{ github.actor }}
   NUGET_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
   NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  VERBOSE: 1
 
 jobs:
   publish:
