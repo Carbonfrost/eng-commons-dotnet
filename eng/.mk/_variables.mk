@@ -14,7 +14,7 @@ ENG_ENABLED_RUNTIMES +=
 ENG_DISABLED_RUNTIMES = $(filter-out $(ENG_ENABLED_RUNTIMES),$(ENG_AVAILABLE_RUNTIMES))
 
 # Some variables that are globally interesting to examine in `make env`
-ENG_GLOBAL_VARIABLES = \
+ENG_GLOBAL_VARIABLES := \
 	ENG_AVAILABLE_RUNTIMES \
 	ENG_DEFAULT_TARGET \
 	ENG_DISABLED_RUNTIMES \
@@ -27,7 +27,7 @@ ENG_GLOBAL_VARIABLES = \
 #
 
 # Variables used by .NET settings
-ENG_DOTNET_VARIABLES = \
+ENG_DOTNET_VARIABLES := \
 	CONFIGURATION \
 	ENG_DOTNET_DIR \
 	ENG_USING_DOTNET \
@@ -39,11 +39,8 @@ ENG_DOTNET_VARIABLES = \
 	NUGET_SOURCE_NAME \
 	NUGET_USER_NAME
 
-# Whether we are meant to use .NET  (See dotnet.mk for autodetection)
-ENG_USING_DOTNET ?= $(ENG_AUTODETECT_USING_DOTNET)
-
-# Directory to use as root of a dotnet project
-ENG_DOTNET_DIR ?= dotnet/
+# Directory to use as root of a dotnet project.
+ENG_DOTNET_DIR := ./dotnet
 
 # The location of the NuGet configuration file
 NUGET_CONFIG_FILE ?= ./nuget.config
@@ -58,7 +55,7 @@ FRAMEWORK ?= netcoreapp3.0
 #
 
 # Variables used by Python settings
-ENG_PYTHON_VARIABLES = \
+ENG_PYTHON_VARIABLES := \
 	ENG_USING_PYTHON \
 	PIP \
 	PYTHON \

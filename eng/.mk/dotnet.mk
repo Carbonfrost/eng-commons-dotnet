@@ -22,9 +22,12 @@
 #            └── (source files)
 #
 
-# Automatically detect whether .NET is in use
-ENG_AUTODETECT_USING_DOTNET = $(shell [ ! -f $(ENG_DOTNET_DIR)/*.sln ] ; echo $$?)
 ENG_AVAILABLE_RUNTIMES += dotnet
+
+# Need to import or possibly re-import variables so that we have
+# immediate evaluation context access to ENG_DOTNET_DIR, which controls
+# autodetection later in this Make file
+include $(dir $(lastword $(MAKEFILE_LIST)))/_variables.mk
 
 .PHONY: \
 	-dotnet/build \
@@ -43,8 +46,19 @@ ENG_AVAILABLE_RUNTIMES += dotnet
 ## Add support for .NET to the project
 use/dotnet: | -dotnet/init -dotnet/solution
 
+# Automatically detect whether .NET is in use.  This needs to be a static computation
+# because it is used in the conditional below
+ENG_AUTODETECT_USING_DOTNET := $(if $(wildcard $(ENG_DOTNET_DIR)/*.sln),1,0)
+
+# User can define ENG_USING_DOTNET themselves to avoid autodeteciton
+ifdef ENG_USING_DOTNET
+_ENG_ACTUALLY_USING_DOTNET = $(ENG_USING_DOTNET)
+else
+_ENG_ACTUALLY_USING_DOTNET = $(ENG_AUTODETECT_USING_DOTNET)
+endif
+
 # Enable the tasks if we are using dotnet
-ifeq (1, $(ENG_USING_DOTNET))
+ifeq (1,$(_ENG_ACTUALLY_USING_DOTNET))
 
 ENG_ENABLED_RUNTIMES += dotnet
 
