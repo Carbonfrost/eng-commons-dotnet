@@ -91,6 +91,7 @@ build: dotnet/build
 redist: dotnet/redist
 push: dotnet/push
 clean: dotnet/clean
+pack: dotnet/pack
 
 else
 dotnet/init: -hint-unsupported-dotnet
@@ -117,7 +118,7 @@ endif
 	$(Q) $(OUTPUT_COLLAPSED) dotnet tool restore
 
 -dotnet/clean:
-	$(Q) rm $(_STANDARD_VERBOSE_FLAG) -rdf $(ENG_DOTNET_DIR)/{src,test}/*/{bin,obj}/*
+	$(Q) rm $(_STANDARD_VERBOSE_FLAG) -rdf $(ENG_DOTNET_DIR)/{src,test}/*/{bin,obj}/
 
 -dotnet/init:
 	$(Q) $(OUTPUT_COLLAPSED) eng/brew_bundle_inject --cask dotnet-sdk

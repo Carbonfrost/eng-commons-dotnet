@@ -1,0 +1,20 @@
+name: Acceptance CI
+
+on:
+  - push
+
+env:
+  ENG_DEV_UPDATE: 1
+  ENG_DEV_UPDATE_REMOTE: file://${{ github.workspace }}
+  ENG_UPDATE_BRANCH: HEAD
+  VERBOSE: 1
+
+jobs:
+  acceptance-macOS:
+    name: Acceptance (macOS)
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: .NET Core
+      run: acceptance/bin/dotnet-project
