@@ -5,6 +5,15 @@
 # Because these are used for installing eng itself, we can't depend on any of the utility targets
 # or variables, so they are redefined here
 
+_RED = \x1b[31m
+_RESET = \x1b[39m
+
+ifneq (, $(VERBOSE))
+Q =
+else
+Q = @
+endif
+
 .PHONY: \
 	eng/check \
 	eng/install \
@@ -35,10 +44,6 @@ else
 -download-eng-archive: -check-eng-updates-requirements
 	$(Q) curl -o "$(_ENG_UPDATE_FILE)" -sL https://github.com/Carbonfrost/eng-commons-dotnet/archive/master.zip
 endif
-
-
-_RED = \x1b[31m
-_RESET = \x1b[39m
 
 -clean-eng-directory:
 	$(Q) rm -rf eng

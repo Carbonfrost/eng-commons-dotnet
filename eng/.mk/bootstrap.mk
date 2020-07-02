@@ -50,7 +50,8 @@ init:
 	$(Q) $(OUTPUT_COLLAPSED) brew update
 
 -direnv-install: -check-command-brew
-	$(Q) $(OUTPUT_COLLAPSED) brew install direnv
+	$(Q) $(OUTPUT_COLLAPSED) eng/brew_bundle_inject direnv
+	$(Q) $(OUTPUT_COLLAPSED) brew bundle
 	$(Q) $(OUTPUT_COLLAPSED) direnv allow
 
 -init-frameworks: | homebrew/init dotnet/init ruby/init
