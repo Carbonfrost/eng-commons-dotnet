@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -e
+
+workspace_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )"
+
+_MAGENTA="\x1b[35m"
+_RESET="\x1b[39m"
+_GREEN="\x1b[32m"
+
+if [[ -n "$VERBOSE" ]]; then
+    set -o xtrace
+fi
+
+echo_and_exit(){
+    echo >&2 "$@"
+    exit 1
+}
+
+project_dir=$(mktemp -d /tmp/dotnet-XXXX)
+
+echo ".NET project directory: ${project_dir}"
+
+cd "$project_dir" || echo_and_exit "fatal: could not switch into project directory"
+
+echo -e "${_MAGENTA}• eng should bootstrap\n${_RESET}"
+make -f "${workspace_dir}/eng/.mk/eng.mk"
+
+
+# Install the .NET Core SDK and create a sample project
+echo -e "${_MAGENTA}• dotnet should install${_RESET}"
+make use/dotnet
+command -v dotnet >/dev/null || echo_and_exit "expected: dotnet should have been installed"
+
+dotnet new classlib -o "dotnet/src/TestConsoleApp"
+dotnet sln dotnet/ add "dotnet/src/TestConsoleApp"
+
+# Because dotnet new also does restore, we delete this so we can test restore independently
+[[ -d "$project_dir/dotnet/src/TestConsoleApp/obj" ]] || echo_and_exit "assumed that restore was completed"
+
+echo -e "${_MAGENTA}• dotnet should clean${_RESET}"
+make clean
+[[ ! -d "$project_dir/dotnet/src/TestConsoleApp/obj" ]] || echo_and_exit "expected: intermediates cleaned"
+
+echo -e "${_MAGENTA}• dotnet should fetch${_RESET}"
+make fetch
+[[ -f "$project_dir/dotnet/src/TestConsoleApp/obj/project.assets.json" ]] || echo_and_exit "expected: dotnet packages to have restored"
+
+echo -e "${_MAGENTA}• dotnet should build${_RESET}"
+make build
+[[ -f "$project_dir/dotnet/src/TestConsoleApp/bin/Release/netstandard2.0/TestConsoleApp.dll" ]] || echo_and_exit "expected: dotnet app to have been built"
+
+echo -e "${_MAGENTA}• dotnet should pack${_RESET}"
+make pack
+[[ -f "$project_dir/dotnet/src/TestConsoleApp/bin/Release/TestConsoleApp.0.0.0.nupkg" ]] || echo_and_exit "expected: dotnet app to have been packaged"
+
+echo -e "${_GREEN}Success!${_RESET}"
