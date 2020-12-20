@@ -1,3 +1,5 @@
+#: go engineering
+
 # Automatically detect whether Go is in use
 ENG_AUTODETECT_USING_GO = $(shell [ ! -f go.mod ] ; echo $$?)
 ENG_AVAILABLE_RUNTIMES += go

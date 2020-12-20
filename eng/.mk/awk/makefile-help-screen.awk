@@ -54,11 +54,11 @@ END{
     for (i = 1; i <= n; i++) {
         a = sorted[i]
         if (group_description[a]) {
-            print "\n"
+            print "";
         }
-        print group_description[a]
+        print group_description[a];
 
-        asort(groups[a], items)
+        asort(groups[a], items);
         for (x = 1; x <= length(items); x++) {
             printf items[x]
         }

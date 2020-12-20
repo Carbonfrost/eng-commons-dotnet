@@ -1,3 +1,5 @@
+#: execute project commands across frameworks
+
 .PHONY: \
 	-direnv-install \
 	-homebrew-install \
@@ -14,7 +16,7 @@ fetch: _HIDDEN_IF_BOOTSTRAPPING=>/dev/null
 fetch:
 	@ $(_DONE)
 
-## Build
+## Build project outputs
 build: fetch
 	@ $(_DONE)
 

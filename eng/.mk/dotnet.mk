@@ -1,3 +1,5 @@
+#: dotnet engineering
+
 #
 # A standard system for building a dotnet assembly.  This should be included from the
 # main Makefile

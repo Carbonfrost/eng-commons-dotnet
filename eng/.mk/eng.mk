@@ -1,3 +1,5 @@
+#: manage engineering platform itself
+
 #
 # Various commands for the Engineering platform itself
 #
@@ -27,12 +29,18 @@ ENG_UPDATE_BRANCH ?= master
 ## Get started with eng, meant to be used in a new repo
 eng/start: eng/update -eng/start-Makefile
 
+## Display the names of active frameworks
+eng/enabled:
+	@ echo $(ENG_ENABLED_RUNTIMES)
+
+## Evaluate release requirements
 release/requirements:
 	$(Q) eng/release_requirements
 
 eng/check:
 	$(Q) eng/check_csproj
 
+## Update eng platform itself to latest version
 eng/update: -eng-update-start -download-eng-archive -clean-eng-directory
 	$(Q) (tar -xf "$(_ENG_UPDATE_FILE)" --strip-components=1 'eng-commons-dotnet-$(ENG_UPDATE_BRANCH)/eng/*'; \
 		tar -xf "$(_ENG_UPDATE_FILE)" --strip-components=2 'eng-commons-dotnet-$(ENG_UPDATE_BRANCH)/integration/*'; \

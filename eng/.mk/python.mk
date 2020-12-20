@@ -1,3 +1,5 @@
+#: python engineering
+
 ENG_AUTODETECT_USING_PYTHON = $(shell \
 	[ ! -f requirements.txt ] && \
 	[ ! -f Pipfile ] ; \

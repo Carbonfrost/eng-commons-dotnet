@@ -1,3 +1,5 @@
+#: rust engineering
+
 # Automatically detect whether Rust is in use
 ENG_AUTODETECT_USING_RUST = $(shell [ ! -f Cargo.toml ] ; echo $$?)
 ENG_AVAILABLE_RUNTIMES += rust

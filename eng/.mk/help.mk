@@ -1,3 +1,5 @@
+#: engineering platform help and debug
+
 ifdef ALL
 	_HELP_MAKEFILE_LIST = $(MAKEFILE_LIST)
 else
@@ -14,13 +16,19 @@ _AWK_VERSION = $(shell awk --version)
 # Show help when no other goal is specified
 .DEFAULT_GOAL = help
 
+## Display pertinent environment variables
+env: -env
+
 ## Show this help screen
 help:
+	@ echo "Engineering platform to support easier, polyglot development"
 	@ if [[ "$(_AWK_VERSION)" == *"GNU Awk"* ]]; then \
 		awk -f $(_ENG_MAKEFILE_DIR)/.mk/awk/makefile-help-screen.awk $(_HELP_MAKEFILE_LIST); \
 	else \
 		awk -f $(_ENG_MAKEFILE_DIR)/.mk/awk/makefile-simple-help-screen.awk $(_HELP_MAKEFILE_LIST) | sort; \
 	fi
+	@ echo
+	@ echo "By default, targets from disabled frameworks are suppressed.  To review all targets, set ALL=1"
 
 ## List all targets
 list:

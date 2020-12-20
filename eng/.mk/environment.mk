@@ -19,13 +19,8 @@ _DEV_MESSAGE=(Is direnv set up correctly?  Have you tried 'make init'?)
 		exit 1; \
 	fi
 
-## Display pertinent environment variables
-env: -env-global -env-enabled-frameworks
+-env: -env-global -env-enabled-frameworks
 	@ printf ""
-
-## Display the names of active frameworks
-eng/enabled:
-	@ echo $(ENG_ENABLED_RUNTIMES)
 
 -env-global:
 	@ $(call _display_variables,ENG_GLOBAL_VARIABLES)

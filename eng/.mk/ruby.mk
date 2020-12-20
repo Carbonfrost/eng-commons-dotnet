@@ -1,3 +1,5 @@
+#: ruby engineering
+
 # Automatically detect whether Ruby is in use
 ENG_AUTODETECT_USING_RUBY = $(shell [ ! -f .ruby-version ] ; echo $$?)
 
