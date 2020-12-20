@@ -37,6 +37,7 @@ ENG_DOTNET_VARIABLES := \
 	CONFIGURATION \
 	ENG_DOTNET_DIR \
 	ENG_USING_DOTNET \
+	DOTNET_VERSION \
 	FRAMEWORK \
 	NUGET_CONFIG_FILE \
 	NUGET_PASSWORD \
@@ -57,6 +58,9 @@ CONFIGURATION ?= Release
 # The framework to publish
 FRAMEWORK ?= netcoreapp3.0
 
+# Desired version of .NET to use
+DOTNET_VERSION ?= 3.1
+
 # ------- Python settings
 #
 
@@ -65,6 +69,7 @@ ENG_PYTHON_VARIABLES := \
 	ENG_USING_PYTHON \
 	PIP \
 	PYTHON \
+	PYENV_VERSION \
 	VIRTUAL_ENV \
 	VIRTUAL_ENV_DISABLE_PROMPT \
 	VIRTUAL_ENV_NAME \
@@ -146,3 +151,11 @@ _CYAN = \x1b[36m
 
 _FATAL_ERROR = $(_RED)fatal: $(_RESET)
 _WARNING = $(_YELLOW)warning: $(_RESET)
+
+# _check_version "command name" "actual version" "expected version"
+define _check_version
+	@ bash -c 'expected="$(3)"; \
+	actual="$(2)"; \
+	[[ $$actual == *$$expected* ]] || \
+	printf >&2 "$(_WARNING)unexpected $(1) version $$actual (expected: $$expected)\n"'
+endef
