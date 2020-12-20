@@ -70,4 +70,4 @@ endif
 	fi
 
 -eng/start-Makefile:
-	$(Q) printf -- "-include eng/.mk/*.mk\nstart:\n\t@ echo 'The Future awaits !'" > Makefile
+	$(Q) printf -- "-include eng/Makefile\nstart:\n\t@ echo 'The Future awaits !'" > Makefile
