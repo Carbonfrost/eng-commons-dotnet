@@ -130,6 +130,10 @@ OUTPUT_COLLAPSED = $(or $(_CHRONIC),$(OUTPUT_HIDDEN))
 _STANDARD_VERBOSE_FLAG = -v
 endif
 
+ifneq (, $(DRY_RUN))
+Q = @echo$(_SPACE)
+endif
+
 _DONE = echo "Done! 🍺" $(OUTPUT_HIDDEN)
 
 # These variables are meant to be used internally
