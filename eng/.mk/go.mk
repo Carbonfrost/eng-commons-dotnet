@@ -57,3 +57,5 @@ endif
 -hint-unsupported-go:
 	@ echo $(_HIDDEN_IF_BOOTSTRAPPING) "$(_WARNING) Nothing to do" \
 		"because $(_MAGENTA)go$(_RESET) is not enabled (Investigate $(_CYAN)\`make use/go\`$(_RESET))"
+
+-init-frameworks: go/init

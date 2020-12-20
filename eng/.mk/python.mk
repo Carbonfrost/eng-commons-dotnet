@@ -92,3 +92,5 @@ endif
 	@ $(call _check_version,python,$(_ENG_ACTUAL_PYTHON_VERSION),$(PYTHON_VERSION))
 
 -requirements-python: -check-python-version -check-command-python
+
+-init-frameworks: python/init

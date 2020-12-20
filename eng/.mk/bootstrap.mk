@@ -58,4 +58,4 @@ init:
 	$(Q) $(OUTPUT_COLLAPSED) brew bundle
 	$(Q) $(OUTPUT_COLLAPSED) direnv allow
 
--init-frameworks: | homebrew/init dotnet/init ruby/init
+-init-frameworks:

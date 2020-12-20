@@ -50,3 +50,5 @@ endif
 -hint-unsupported-rust:
 	@ echo $(_HIDDEN_IF_BOOTSTRAPPING) "$(_WARNING) Nothing to do" \
 		"because $(_MAGENTA)rust$(_RESET) is not enabled (Investigate $(_CYAN)\`make use/rust\`$(_RESET))"
+
+-init-frameworks: rust/init

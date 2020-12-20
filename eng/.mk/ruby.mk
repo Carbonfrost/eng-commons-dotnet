@@ -50,3 +50,5 @@ endif
 -hint-unsupported-ruby:
 	@ echo $(_HIDDEN_IF_BOOTSTRAPPING) "$(_WARNING) Nothing to do" \
 		"because $(_MAGENTA)Ruby$(_RESET) is not enabled (Investigate $(_CYAN)\`make use/ruby\`$(_RESET))"
+
+-init-frameworks: ruby/init

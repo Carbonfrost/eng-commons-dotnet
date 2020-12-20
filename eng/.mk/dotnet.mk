@@ -157,3 +157,5 @@ endif
 -hint-unsupported-dotnet:
 	@ echo $(_HIDDEN_IF_BOOTSTRAPPING) "$(_WARNING) Nothing to do" \
 		"because $(_MAGENTA).NET$(_RESET) is not enabled (Investigate $(_CYAN)\`make use/dotnet\`$(_RESET))"
+
+-init-frameworks: dotnet/init
