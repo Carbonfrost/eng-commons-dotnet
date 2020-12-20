@@ -1,0 +1,16 @@
+# Variables used by Rust settings
+ENG_RUST_VARIABLES := \
+	CARGO_HOME \
+	CARGO_TARGET_DIR \
+	RUSTC \
+	RUSTC_WRAPPER \
+	RUSTDOC \
+	RUSTDOCFLAGS \
+	RUSTFLAGS \
+	CARGO_INCREMENTAL \
+	CARGO_CACHE_RUSTC_INFO \
+	CARGO_NAME \
+	CARGO_EMAIL \
+
+# Whether we are meant to use Rust.  (See rust.mk for autodetection)
+ENG_USING_RUST ?= $(ENG_AUTODETECT_USING_RUST)
