@@ -9,9 +9,6 @@
 	init \
 	install \
 
-## The default target which is to build
-default: $(ENG_DEFAULT_TARGET)
-
 ## Fetch dependencies
 fetch: _HIDDEN_IF_BOOTSTRAPPING=>/dev/null
 fetch:

@@ -4,9 +4,6 @@ VERBOSE ?=
 # Prefix controlling where software is installed
 PREFIX ?= /usr/local
 
-# Default target when `make` is run
-ENG_DEFAULT_TARGET ?= build
-
 # Provides a list of the enabled runtimes, derived from the ENG_USING_X variables
 ENG_ENABLED_RUNTIMES +=
 
@@ -16,7 +13,6 @@ ENG_DISABLED_RUNTIMES = $(filter-out $(ENG_ENABLED_RUNTIMES),$(ENG_AVAILABLE_RUN
 # Some variables that are globally interesting to examine in `make env`
 ENG_GLOBAL_VARIABLES := \
 	ENG_AVAILABLE_RUNTIMES \
-	ENG_DEFAULT_TARGET \
 	ENG_DISABLED_RUNTIMES \
 	ENG_ENABLED_RUNTIMES \
 	PATH \
