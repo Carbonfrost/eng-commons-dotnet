@@ -47,6 +47,9 @@ eng/update: -eng-update-start -download-eng-archive -clean-eng-directory
 	)
 	@ echo "Done! 🍺"
 
+## Install integrations depending upon active runtimes
+eng/install: -eng/install
+
 ifeq ($(ENG_DEV_UPDATE), 1)
 -download-eng-archive: -check-eng-updates-requirements
 	$(Q) git archive --format=zip --prefix=eng-commons-dotnet-$(ENG_UPDATE_BRANCH)/ --remote=$(ENG_DEV_UPDATE_REMOTE) $(ENG_UPDATE_BRANCH) -o $(_ENG_UPDATE_FILE)

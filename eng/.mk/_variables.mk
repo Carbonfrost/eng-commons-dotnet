@@ -30,6 +30,7 @@ ENG_GLOBAL_VERBOSE_VARIABLES := \
 	DIRENV_DIR \
 
 include $(_ENG_MAKEFILE_DIR)/.mk/_variables/*.mk
+include $(_ENG_MAKEFILE_DIR)/.mk/_eng/*.mk
 
 # -------
 #
@@ -63,6 +64,10 @@ _SPACE :=
 _SPACE +=
 _COMMA := ,
 _PIPE := |
+
+# Directories
+_ENG_RUNTIMES_DIR = $(_ENG_MAKEFILE_DIR)/runtimes
+_ENG_BASE_DIR = $(_ENG_MAKEFILE_DIR)/base
 
 # Terminal output formatting
 _RESET = \x1b[39m
