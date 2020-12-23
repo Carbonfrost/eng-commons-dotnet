@@ -52,6 +52,9 @@ define _status
 	if [[ -n "$(VERBOSE)" ]] || [[ $(_ENG_ACTUALLY_USING_$(2)) == "1" ]]; then \
 	$(call _display_variables,ENG_$(2)_VARIABLES) \
 	fi
+	if [[ -n "$(VERBOSE)" ]]; then \
+	$(call _display_variables,ENG_$(2)_VERBOSE_VARIABLES) \
+	fi
 endef
 
 define _display_variables

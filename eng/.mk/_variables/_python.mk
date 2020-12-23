@@ -3,13 +3,14 @@
 
 # Variables used by Python settings
 ENG_PYTHON_VARIABLES := \
-	ENG_USING_PYTHON \
-	PIP \
-	PYTHON \
 	PYENV_VERSION \
 	VIRTUAL_ENV \
+	VIRTUAL_ENV_NAME \	
+
+ENG_PYTHON_VERBOSE_VARIABLES := \
 	VIRTUAL_ENV_DISABLE_PROMPT \
-	VIRTUAL_ENV_NAME \
+	PIP \
+	PYTHON \	
 
 # Whether we are meant to use Python.  (See python.mk for autodetection)
 ENG_USING_PYTHON ?= $(ENG_AUTODETECT_USING_PYTHON)
