@@ -30,7 +30,6 @@ ENG_GLOBAL_VERBOSE_VARIABLES := \
 	DIRENV_DIR \
 
 include $(_ENG_MAKEFILE_DIR)/.mk/_variables/*.mk
-include $(_ENG_MAKEFILE_DIR)/.mk/_eng/*.mk
 
 # -------
 #
