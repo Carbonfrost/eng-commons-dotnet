@@ -12,19 +12,20 @@ _ENG_ACTUALLY_USING_GO = $(ENG_AUTODETECT_USING_GO)
 endif
 
 .PHONY: \
-	-go/init \
 	-go/build \
+	-go/fmt \
+	-go/get \
+	-go/init \
 	-hint-unsupported-go \
 	-use/go-mod \
-	go/init \
 	go/build \
+	go/fmt \
+	go/get \
+	go/init \
 	use/go \
 
 ## Add support for Go to the project
 use/go: | -go/init -use/go-mod
-
-fetch: go/get
-build: go/build
 
 # Enable the tasks if we are using Go
 ifeq (1,$(ENG_USING_GO))
@@ -32,12 +33,25 @@ ENG_ENABLED_RUNTIMES += go
 
 ## Install Go and project dependencies
 go/init: -go/init
+
+## Build Go project
 go/build: -go/build
+
+## Get dependent Go packages and modules
 go/get: -go/get
+
+## Format Go source files
+go/fmt: -go/fmt
+
+fetch: go/get
+build: go/build
+fmt: go/fmt
+
 else
 go/init: -hint-unsupported-go
 go/build: -hint-unsupported-go
 go/get: -hint-unsupported-go
+go/fmt: -hint-unsupported-go
 endif
 
 -go/init:
@@ -50,6 +64,9 @@ endif
 
 -go/get:
 	$(Q) go get
+
+-go/fmt:
+	$(Q) go fmt ./...
 
 -use/go-mod: -check-command-go
 	$(Q) [ -f go.mod ] && $(OUTPUT_HIDDEN) go mod
