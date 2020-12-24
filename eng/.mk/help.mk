@@ -32,7 +32,7 @@ help:
 
 ## List all targets
 list:
-	@ awk -f $(_ENG_MAKEFILE_DIR)/.mk/awk/makefile-list-targets.awk $(MAKEFILE_LIST) | grep -vE '^\.' | uniq | sort
+	@ awk -f $(_ENG_MAKEFILE_DIR)/.mk/awk/makefile-list-targets.awk $(MAKEFILE_LIST) | grep -vE '^\.' | sort | uniq
 
 ## Version of engineering platform
 version:
