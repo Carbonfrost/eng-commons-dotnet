@@ -16,13 +16,24 @@ else
 Q = @
 endif
 
-_ENG_UPDATE_FILE:=$(shell mktemp)
+_ENG_UPDATE_FILE := $(shell mktemp)
+_ENG_VERSION_FILE := $(_ENG_MAKEFILE_DIR)/VERSION
+
 ENG_DEV_UPDATE_REMOTE ?= file://$(HOME)/source/eng-commons-dotnet
 ENG_UPDATE_BRANCH ?= master
+ENG_GITHUB_REPO = https://github.com/Carbonfrost/eng-commons-dotnet
 
 .PHONY: \
+	-check-eng-updates-requirements \
+	-clean-eng-directory \
+	-download-eng-archive \
+	-eng-update-start \
+	-eng/start-Makefile \
+	-generate-version-stub \
 	eng/check \
+	eng/enabled \
 	eng/install \
+	eng/start \
 	eng/update \
 	release/requirements \
 
@@ -45,6 +56,8 @@ eng/update: -eng-update-start -download-eng-archive -clean-eng-directory
 	$(Q) (tar -xf "$(_ENG_UPDATE_FILE)" --strip-components=1 'eng-commons-dotnet-$(ENG_UPDATE_BRANCH)/eng/*'; \
 		tar -xf "$(_ENG_UPDATE_FILE)" --strip-components=2 'eng-commons-dotnet-$(ENG_UPDATE_BRANCH)/integration/*'; \
 	)
+	$(Q) echo $(ENG_UPDATE_BRANCH) > $(_ENG_VERSION_FILE)
+	$(Q) git ls-remote $(_ENG_LS_REMOTE) refs/heads/$(ENG_UPDATE_BRANCH) | cut -f1 >> $(_ENG_VERSION_FILE)
 	@ echo "Done! 🍺"
 
 ## Install integrations depending upon active runtimes
@@ -55,11 +68,17 @@ ifeq ($(ENG_DEV_UPDATE), 1)
 	$(Q) git archive --format=zip --prefix=eng-commons-dotnet-$(ENG_UPDATE_BRANCH)/ --remote=$(ENG_DEV_UPDATE_REMOTE) $(ENG_UPDATE_BRANCH) -o $(_ENG_UPDATE_FILE)
 -eng-update-start:
 	@ echo "Installing engineering platform from dev $(ENG_DEV_UPDATE_REMOTE):$(ENG_UPDATE_BRANCH) ..."
+
+_ENG_LS_REMOTE = $(ENG_DEV_UPDATE_REMOTE)
+
 else
 -download-eng-archive: -check-eng-updates-requirements
-	$(Q) curl -o "$(_ENG_UPDATE_FILE)" -sL https://github.com/Carbonfrost/eng-commons-dotnet/archive/$(ENG_UPDATE_BRANCH).zip
+	$(Q) curl -o "$(_ENG_UPDATE_FILE)" -sL $(ENG_GITHUB_REPO)/archive/$(ENG_UPDATE_BRANCH).zip
 -eng-update-start:
 	@ echo "Installing engineering platform from $(ENG_UPDATE_BRANCH) ..."
+
+_ENG_LS_REMOTE = $(ENG_GITHUB_REPO)
+
 endif
 
 

@@ -34,6 +34,11 @@ help:
 list:
 	@ awk -f $(_ENG_MAKEFILE_DIR)/.mk/awk/makefile-list-targets.awk $(MAKEFILE_LIST) | grep -vE '^\.' | uniq | sort
 
+## Version of engineering platform
+version:
+	@ echo "Engineering platform version:"
+	$(Q) [[ -f "$(_ENG_VERSION_FILE)" ]] && paste -s $(_ENG_VERSION_FILE)	
+
 ## Diagnose common issues
 doctor: \
 	-checks \
