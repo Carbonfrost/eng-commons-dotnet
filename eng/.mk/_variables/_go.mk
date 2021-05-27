@@ -4,6 +4,7 @@
 # Variables used by Python settings
 ENG_GO_VARIABLES := \
 	GOPATH \
+	GO_LDFLAGS \
 
 ENG_GO_VERBOSE_VARIABLES := \
 	AR \

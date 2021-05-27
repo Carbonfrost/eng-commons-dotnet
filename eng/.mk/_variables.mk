@@ -4,6 +4,12 @@ VERBOSE ?=
 # Prefix controlling where software is installed
 PREFIX ?= /usr/local
 
+# Redistributable package output directory
+ENG_REDIST_DIR = redist
+
+# Build output directory
+ENG_BUILD_DIR = bin
+
 # Provides a list of the enabled runtimes, derived from the ENG_USING_X variables
 ENG_ENABLED_RUNTIMES +=
 
@@ -28,6 +34,8 @@ ENG_GLOBAL_VERBOSE_VARIABLES := \
 	TMPDIR \
 	USER \
 	DIRENV_DIR \
+	ENG_REDIST_DIR \
+	ENG_BUILD_DIR \
 
 include $(_ENG_MAKEFILE_DIR)/.mk/_variables/*.mk
 

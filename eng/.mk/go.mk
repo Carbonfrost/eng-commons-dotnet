@@ -12,6 +12,7 @@ _ENG_ACTUALLY_USING_GO = $(ENG_AUTODETECT_USING_GO)
 endif
 
 .PHONY: \
+	-ensure-go-output-dir \
 	-go/build \
 	-go/fmt \
 	-go/get \
@@ -30,6 +31,13 @@ use/go: | -go/init -use/go-mod
 # Enable the tasks if we are using Go
 ifeq (1,$(ENG_USING_GO))
 ENG_ENABLED_RUNTIMES += go
+
+GO_LDFLAGS ?= "-X f=unused"
+
+GOOS = $(shell go env GOOS)
+GOARCH = $(shell go env GOARCH)
+
+_GO_OUTPUT_DIR=$(ENG_BUILD_DIR)/$(GOOS)_$(GOARCH)
 
 ## Install Go and project dependencies
 go/init: -go/init
@@ -59,11 +67,11 @@ endif
 	$(Q) $(OUTPUT_COLLAPSED) eng/brew_bundle_inject go
 	$(Q) $(OUTPUT_COLLAPSED) brew bundle
 
--go/build:
-	$(Q) go build
+-go/build: -ensure-go-output-dir
+	$(Q) go build -ldflags="$(GO_LDFLAGS)" -o "$(_GO_OUTPUT_DIR)" ./...
 
 -go/get:
-	$(Q) go get
+	$(Q) go get ./...
 
 -go/fmt:
 	$(Q) go fmt ./...
@@ -76,3 +84,6 @@ endif
 		"because $(_MAGENTA)go$(_RESET) is not enabled (Investigate $(_CYAN)\`make use/go\`$(_RESET))"
 
 -init-frameworks: go/init
+
+-ensure-go-output-dir:
+	$(Q) mkdir -p "$(_GO_OUTPUT_DIR)"
