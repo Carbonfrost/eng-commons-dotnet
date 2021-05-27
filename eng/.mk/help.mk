@@ -37,7 +37,7 @@ list:
 ## Version of engineering platform
 version:
 	@ echo "Engineering platform version:"
-	$(Q) [[ -f "$(_ENG_VERSION_FILE)" ]] && paste -s $(_ENG_VERSION_FILE)	
+	$(Q) [[ -f "$(_ENG_VERSION_FILE)" ]] && paste -s $(_ENG_VERSION_FILE)
 
 ## Diagnose common issues
 doctor: \
