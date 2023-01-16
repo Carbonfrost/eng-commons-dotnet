@@ -42,7 +42,7 @@ eng/start: eng/update -eng/start-Makefile
 
 ## Display the names of active frameworks
 eng/enabled:
-	@ echo $(ENG_ENABLED_RUNTIMES)
+	@ echo $(ENG_ENABLED_STACKS)
 
 ## Evaluate release requirements
 release/requirements:
@@ -60,7 +60,7 @@ eng/update: -eng-update-start -download-eng-archive -clean-eng-directory
 	$(Q) git ls-remote $(_ENG_LS_REMOTE) refs/heads/$(ENG_UPDATE_BRANCH) | cut -f1 >> $(_ENG_VERSION_FILE)
 	@ echo "Done! 🍺"
 
-## Install integrations depending upon active runtimes
+## Install integrations depending upon active stacks
 eng/install: -eng/install
 
 ifeq ($(ENG_DEV_UPDATE), 1)
