@@ -7,8 +7,9 @@
 # Because these are used for installing eng itself, we can't depend on any of the utility targets
 # or variables, so they are redefined here
 
-_RED = \x1b[31m
-_RESET = \x1b[39m
+_RESET = $(shell tput sgr0 2>/dev/null || printf '')
+_RED = $(shell tput setaf 1 2>/dev/null || printf '')
+_CYAN = $(shell tput setaf 6 2>/dev/null || printf '')
 
 ifneq (, $(VERBOSE))
 Q =
