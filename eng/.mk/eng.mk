@@ -16,6 +16,10 @@ else
 Q = @
 endif
 
+# This variable will be unset during the initial bootstrap.  So choose the
+# default location based on working directory
+_ENG_MAKEFILE_DIR := $(or $(_ENG_MAKEFILE_DIR),$(shell pwd)/eng)
+
 _ENG_UPDATE_FILE := $(shell mktemp)
 _ENG_VERSION_FILE := $(_ENG_MAKEFILE_DIR)/VERSION
 
