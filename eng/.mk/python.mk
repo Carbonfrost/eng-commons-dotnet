@@ -83,7 +83,7 @@ endif
 		$(_VENV) && $(OUTPUT_HIDDEN) $(PYTHON) -m pip install; \
 	fi
 
--python/install-pipenv:
+-python/install-pipenv: -python/init-venv
 	$(Q) if [ -f Pipfile ]; then \
 		$(_VENV) && command -v pipenv > /dev/null && $(OUTPUT_HIDDEN) pipenv install; \
 	fi
