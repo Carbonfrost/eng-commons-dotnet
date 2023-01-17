@@ -40,9 +40,10 @@ ENG_GITHUB_REPO = https://github.com/Carbonfrost/eng-commons-dotnet
 	eng/start \
 	eng/update \
 	release/requirements \
+	-eng/advice \
 
 ## Get started with eng, meant to be used in a new repo
-eng/start: eng/update -eng/start-Makefile
+eng/start: eng/update -eng/start-Makefile -eng/advice
 
 ## Display the names of active frameworks
 eng/enabled:
@@ -104,4 +105,13 @@ endif
 	fi
 
 -eng/start-Makefile:
-	$(Q) printf -- "-include eng/Makefile\nstart:\n\t@ echo 'The Future awaits !'" > Makefile
+	$(Q) printf -- "-include eng/Makefile\nhelp: -eng/advice\nstart:\n\t@ echo 'The Future awaits !'" > Makefile
+
+-eng/advice:
+	@ printf "Welcome to Carbonfrost!  "
+	@ printf "To use a framework:\n\t$(_CYAN)make use/python$(_RESET)\n"
+	@ printf "To install framework dependencies:\n\t$(_CYAN)make install/python$(_RESET)\n"
+	@ printf "Try using the top-level target:\n\t$(_CYAN)make start$(_RESET)\n"
+	@ printf "When ready, change the top-level target by adding this to Makefile:\n"
+	@ printf "\t$(_CYAN).DEFAULT_GOAL = start$(_RESET)\n\n"
+	@ printf "This causes the bare make command to run the top-level target.\n"
