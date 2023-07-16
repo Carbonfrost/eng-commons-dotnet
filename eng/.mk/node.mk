@@ -45,8 +45,8 @@ use/node: | -node/init
 -node/init:
 	$(Q) $(OUTPUT_COLLAPSED) eng/brew_bundle_inject nvm
 	$(Q) $(OUTPUT_COLLAPSED) brew bundle
-	$(Q) $(OUTPUT_COLLAPSED) touch .nvmrc
 	$(Q) $(OUTPUT_COLLAPSED) bash -c '. "/opt/homebrew/opt/nvm/nvm.sh"; nvm install --latest-npm --lts; nvm use --lts'
+	$(Q) $(OUTPUT_COLLAPSED) bash -c '. "/opt/homebrew/opt/nvm/nvm.sh"; nvm use --lts; node --version > .nvmrc'
 
 -node/install: -requirements-node
 	$(Q) $(OUTPUT_COLLAPSED) npm install
